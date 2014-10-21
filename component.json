@@ -1,0 +1,30 @@
+{
+  "name": "noflo-runtime-webrtc",
+  "description": "WebRTC runtime transport support for NoFlo",
+  "keywords": [
+    "fbp",
+    "webrtc",
+    "flowhub",
+    "noflo"
+  ],
+  "repo": "noflo/noflo-runtime-webrtc",
+  "version": "0.0.1",
+  "dependencies": {
+    "forresto/component-peerjs": "*",
+    "broofa/node-uuid": "*"
+  },
+  "remotes": [
+    "https://raw.githubusercontent.com"
+  ],
+  "development": {
+
+  },
+  "license": "MIT",
+  "main": "runtime/network.js",
+  "scripts": [
+    "runtime/network.js"
+  ],
+  "json": [
+    "component.json"
+  ]
+}

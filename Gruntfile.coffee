@@ -8,16 +8,52 @@ module.exports = ->
       files: ['spec/*.coffee', 'runtime/*.js']
       tasks: ['test']
 
-    # BDD tests on Node.js
-    cafemocha:
-      nodejs:
-        src: ['spec/*.coffee']
+    # Browser verison building
+    noflo_browser:
+      build:
+        files:
+          'browser/noflo-runtime-webrtc.js': ['component.json']
+
+    coffee:
+      spec:
         options:
-          reporter: 'dot'
+          bare: true
+        expand: true
+        cwd: 'spec'
+        src: ['**.coffee']
+        dest: 'spec'
+        ext: '.js'
+
+    # BDD tests on Node.js
+    mochaTest:
+      nodejs:
+        src: ['test/*.js']
+        options:
+          reporter: 'spec'
+          require: 'coffee-script/register'
+
+    # Web server for the browser tests
+    connect:
+      server:
+        options:
+          port: 8000
+
+    # BDD tests on browser
+    mocha_phantomjs:
+      all:
+        options:
+          output: 'spec/result.xml'
+          reporter: 'spec'
+          urls: ['http://localhost:8000/spec/runner.html']
 
   # Grunt plugins used for testing
   @loadNpmTasks 'grunt-contrib-watch'
-  @loadNpmTasks 'grunt-cafe-mocha'
+  @loadNpmTasks 'grunt-mocha-test'
+  @loadNpmTasks 'grunt-contrib-connect'
+  @loadNpmTasks 'grunt-mocha-phantomjs'
+  @loadNpmTasks 'grunt-contrib-coffee'
+  @loadNpmTasks 'grunt-noflo-browser'
 
-  @registerTask 'test', ['cafemocha']
+  @registerTask 'build', ['noflo_browser']
+  @registerTask 'test', ['build', 'mochaTest', 'coffee', 'connect', 'mocha_phantomjs']
   @registerTask 'default', ['test']

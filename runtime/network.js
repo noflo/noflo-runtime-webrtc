@@ -1,3 +1,5 @@
+/*
+
 var Base = require('noflo-runtime-base');
 var Peer = require('peer');
 
@@ -42,3 +44,5 @@ module.exports = function (httpServer, options) {
     });
   }
 };
+
+*/
