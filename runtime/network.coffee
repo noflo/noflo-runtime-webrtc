@@ -1,5 +1,11 @@
+isBrowser = ->
+  !(typeof process isnt 'undefined' and process.execPath and process.execPath.indexOf('node') isnt -1)
 
 Base = require 'noflo-runtime-base'
+if isBrowser()
+  uuid = require 'node-uuid'
+else
+  uuid = require 'uuid'
 
 class WebRTCRuntime extends Base
   constructor: (options) ->
@@ -16,6 +22,8 @@ class WebRTCRuntime extends Base
 
 module.exports = (id, options) ->
   runtime = new WebRTCRuntime options
+  id = uuid.v4() if not id
+  runtime.id = id
 
   rtcOptions =
     room: id

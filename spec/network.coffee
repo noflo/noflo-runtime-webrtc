@@ -50,24 +50,33 @@ class FakeClient extends EventEmitter
         
 
 describeIfBrowser 'WebRTC runtime', ->
-  ui = null
-  runtime = null
-  name = uuid.v4()
-  options = {}
 
   before () ->
   after () ->
 
-  describe 'Instantiating', ->
-    it 'should not error', ->
-      runtime = new Runtime name, options
-      ui = new FakeClient
-    it 'connecting', (done) ->
+  describe 'Instantiating without ID', ->
+    it 'should generate an ID', ->
+      runtime = new Runtime null, {}
+      chai.expect(runtime.id).to.be.a 'string'
+      chai.expect(runtime.id).to.have.length.within 10,60
+  describe 'Instantiating with ID', ->
+    it 'should respect that ID', ->
+      name = 'myfunckycustomid11'
+      runtime = new Runtime name, {}
+      chai.expect(runtime.id).to.equal name
+
+  describe 'Running', () ->
+    ui = null
+    runtime = null
+    options = {}
+    it 'connecting UI emits connected', (done) ->
       @timeout 10000
+      runtime = new Runtime null, options
+      ui = new FakeClient
       ui.on 'connected', () ->
         done()
-      ui.connect name
-    it 'getruntime', (done) ->
+      ui.connect runtime.id
+    it 'sending getruntime returns runtime info', (done) ->
       ui.once 'message', (msg) ->
         chai.expect(msg.protocol).to.equal 'runtime'
         chai.expect(msg.message).to.equal 'runtime'
