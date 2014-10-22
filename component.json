@@ -22,9 +22,9 @@
   "development": {
   },
   "license": "MIT",
-  "main": "runtime/network.js",
+  "main": "runtime/network.coffee",
   "scripts": [
-    "runtime/network.js"
+    "runtime/network.coffee"
   ],
   "json": [
     "component.json"
