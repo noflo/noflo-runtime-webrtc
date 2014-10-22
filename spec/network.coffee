@@ -42,7 +42,7 @@ class FakeClient extends EventEmitter
   send: (protocol, topic, payload) ->
     msg =
       protocol: protocol
-      message: topic
+      command: topic
       payload: payload
     @channel.send JSON.stringify msg
         
@@ -89,7 +89,7 @@ describeIfBrowser 'WebRTC runtime', ->
     it 'sending getruntime returns runtime info', (done) ->
       ui.once 'message', (msg) ->
         chai.expect(msg.protocol).to.equal 'runtime'
-        chai.expect(msg.message).to.equal 'runtime'
+        chai.expect(msg.command).to.equal 'runtime'
         chai.expect(msg.payload).to.include.keys 'capabilities'
         done()
       ui.send 'runtime', 'getruntime', null

@@ -15,7 +15,7 @@ class WebRTCRuntime extends Base
     return if not context.channel
     msg =
       protocol: protocol
-      message: topic
+      command: topic
       payload: payload
     m = JSON.stringify msg
     context.channel.send m
@@ -43,7 +43,7 @@ module.exports = (id, options) ->
       context =
         channel: dc
       msg = JSON.parse data.data
-      runtime.receive msg.protocol, msg.message, msg.payload, context
+      runtime.receive msg.protocol, msg.command, msg.payload, context
 
   peer.on 'channel:closed:chat', (id, dc) ->
     dc.onmessage = null
