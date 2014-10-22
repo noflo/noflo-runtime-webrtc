@@ -1,14 +1,14 @@
 {
   "name": "noflo-runtime-webrtc",
   "description": "NoFlo runtime transport over WebRTC",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "Jon Nordby",
     "email": "jononor@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jonnor/noflo-runtime-webrtc.git"
+    "url": "git://github.com/noflo/noflo-runtime-webrtc.git"
   },
   "scripts": {
     "test": "grunt test"
