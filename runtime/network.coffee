@@ -8,8 +8,34 @@ else
   uuid = require 'uuid'
 
 class WebRTCRuntime extends Base
-  constructor: (options) ->
+  constructor: (id, options) ->
     super options
+    @channels = []
+    @id = id
+    @id = uuid.v4() if not id
+
+    rtcOptions =
+      room: @id
+      debug: true
+      channels:
+        chat: true
+      signaller: '//switchboard.rtc.io'
+      capture: false
+      constraints: false
+      expectedLocalStreams: 0
+
+    peer = RTC rtcOptions
+    peer.on 'channel:opened:chat', (id, dc) =>
+      @channels.push dc
+      dc.onmessage = (data) =>
+        context =
+          channel: dc
+        msg = JSON.parse data.data
+        @receive msg.protocol, msg.command, msg.payload, context
+
+    peer.on 'channel:closed:chat', (id, dc) =>
+      dc.onmessage = null
+      # TODO: remove from @channels
 
   send: (protocol, topic, payload, context) ->
     return if not context.channel
@@ -20,33 +46,15 @@ class WebRTCRuntime extends Base
     m = JSON.stringify msg
     context.channel.send m
 
+  sendAll: (protocol, topic, payload) ->
+    msg =
+      protocol: protocol
+      command: topic
+      payload: payload
+    m = JSON.stringify msg
+    for channel in @channels
+      channel.send m
+
 module.exports = (id, options) ->
-  runtime = new WebRTCRuntime options
-  id = uuid.v4() if not id
-  runtime.id = id
-
-  rtcOptions =
-    room: id
-    debug: true
-    channels:
-      chat: true
-    signaller: '//switchboard.rtc.io'
-    capture: false
-    constraints: false
-    expectedLocalStreams: 0
-
-  channels = []
-  peer = RTC rtcOptions
-  peer.on 'channel:opened:chat', (id, dc) ->
-    channels.push dc
-    dc.onmessage = (data) ->
-      context =
-        channel: dc
-      msg = JSON.parse data.data
-      runtime.receive msg.protocol, msg.command, msg.payload, context
-
-  peer.on 'channel:closed:chat', (id, dc) ->
-    dc.onmessage = null
-    # TODO: remove from channels
-
+  runtime = new WebRTCRuntime id, options
   return runtime
