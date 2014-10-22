@@ -10,7 +10,8 @@
   "repo": "noflo/noflo-runtime-webrtc",
   "version": "0.0.1",
   "dependencies": {
-    "forresto/component-peerjs": "*",
+    "noflo/noflo-runtime-base": "*",
+    "bergie/emitter": "*",
     "broofa/node-uuid": "*"
   },
   "remotes": [

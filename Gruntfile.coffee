@@ -23,6 +23,14 @@ module.exports = ->
         src: ['**.coffee']
         dest: 'spec'
         ext: '.js'
+      runtime:
+        options:
+          bare: true
+        expand: true
+        cwd: 'runtime'
+        src: ['**.coffee']
+        dest: 'runtime'
+        ext: '.js'
 
     # BDD tests on Node.js
     mochaTest:
@@ -54,6 +62,6 @@ module.exports = ->
   @loadNpmTasks 'grunt-contrib-coffee'
   @loadNpmTasks 'grunt-noflo-browser'
 
-  @registerTask 'build', ['noflo_browser']
-  @registerTask 'test', ['build', 'mochaTest', 'coffee', 'connect', 'mocha_phantomjs']
+  @registerTask 'build', ['coffee', 'noflo_browser']
+  @registerTask 'test', ['build', 'mochaTest', 'connect', 'mocha_phantomjs']
   @registerTask 'default', ['test']
