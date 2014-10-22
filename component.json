@@ -12,13 +12,14 @@
   "dependencies": {
     "noflo/noflo-runtime-base": "*",
     "bergie/emitter": "*",
-    "broofa/node-uuid": "*"
+    "broofa/node-uuid": "*",
+    "noflo/noflo": "*",
+    "noflo/noflo-core": "*"
   },
   "remotes": [
     "https://raw.githubusercontent.com"
   ],
   "development": {
-
   },
   "license": "MIT",
   "main": "runtime/network.js",

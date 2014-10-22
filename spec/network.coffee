@@ -2,20 +2,18 @@
 isBrowser = ->
   !(typeof process isnt 'undefined' and process.execPath and process.execPath.indexOf('node') isnt -1)
 
+noflo = require 'noflo'
 {EventEmitter} = require 'events'
-
-if isBrowser()
-  uuid = require 'node-uuid'
-else
-  chai = require 'chai'
-  uuid = require 'uuid'
-
-
 Runtime = require 'noflo-runtime-webrtc'
 
-describeIfBrowser = if isBrowser() then describe else describe.skip
+if isBrowser()
+  #
+else
+  chai = require 'chai'
 
-apikey = '6qn1eox3jbawcdi' # FIXME: use envvar
+describeIfBrowser = if isBrowser() then describe else describe.skip
+describeIfWebRTC = if (isBrowser() and not window.callPhantom) then describe else describe.skip
+
 
 class FakeClient extends EventEmitter
   constructor: () ->
@@ -64,8 +62,20 @@ describeIfBrowser 'WebRTC runtime', ->
       name = 'myfunckycustomid11'
       runtime = new Runtime name, {}
       chai.expect(runtime.id).to.equal name
+  describe 'Instantiating with a graph', ->
+    it 'should emit network:addnetwork', (done) ->
+      file = "'18' -> IN rep(core/Repeat)"
+      noflo.graph.loadFBP file, (graph) ->
+        console.log graph.id
+        graph.id = 'default/main'
+        graph.baseDir = 'noflo-runtime-webrtc'
+        chai.expect(graph).to.be.a 'object'
+        runtime = new Runtime null, { defaultGraph: graph, baseDir: graph.baseDir }
+        runtime.network.on 'addnetwork', () ->
+          chai.expect(Object.keys(runtime.network.networks)).to.have.length 1
+          done()
 
-  describe 'Running', () ->
+  describeIfWebRTC 'Running', () ->
     ui = null
     runtime = null
     options = {}

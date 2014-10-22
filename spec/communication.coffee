@@ -9,10 +9,11 @@ else
   uuid = require 'uuid'
 
 describeIfBrowser = if isBrowser() then describe else describe.skip
+describeIfWebRTC = if (isBrowser() and not window.callPhantom) then describe else describe.skip
 
 apikey = '6qn1eox3jbawcdi' # FIXME: use envvar
 
-describeIfBrowser 'WebRTC communication', ->
+describeIfWebRTC 'WebRTC communication', ->
   runtimePeer = null
   clientPeer = null
   runtimeChannel = null
