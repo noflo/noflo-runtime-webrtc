@@ -35,7 +35,7 @@ class WebRTCRuntime extends Base
 
     peer.on 'channel:closed:chat', (id, dc) =>
       dc.onmessage = null
-      return if (runtime.connections.indexOf(connection) === -1)
+      return if (runtime.connections.indexOf(connection) == -1)
       runtime.connections.splice runtime.connections.indexOf(connection), 1
 
   send: (protocol, topic, payload, context) ->
