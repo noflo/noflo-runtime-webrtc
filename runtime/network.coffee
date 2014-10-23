@@ -35,7 +35,8 @@ class WebRTCRuntime extends Base
 
     peer.on 'channel:closed:chat', (id, dc) =>
       dc.onmessage = null
-      # TODO: remove from @channels
+      return if (runtime.connections.indexOf(connection) === -1)
+      runtime.connections.splice runtime.connections.indexOf(connection), 1
 
   send: (protocol, topic, payload, context) ->
     return if not context.channel
