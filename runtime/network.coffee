@@ -8,18 +8,27 @@ else
   uuid = require 'uuid'
 
 class WebRTCRuntime extends Base
-  constructor: (id, options) ->
+  constructor: (address, options, dontstart) ->
     super options
     @channels = []
-    @id = id
-    @id = uuid.v4() if not id
 
+    if (address and address.indexOf('#') != -1)
+      @signaller = address.split('#')[0]
+      @id = address.split('#')[1]
+    else
+      @signaller = 'https://api.flowhub.io'
+      @id = address
+    @id = uuid.v4() if not @id
+
+    @start() if not dontstart
+
+  start: () ->
     rtcOptions =
       room: @id
       debug: true
       channels:
         chat: true
-      signaller: '//switchboard.rtc.io'
+      signaller: @signaller
       capture: false
       constraints: false
       expectedLocalStreams: 0
@@ -56,6 +65,6 @@ class WebRTCRuntime extends Base
     for channel in @channels
       channel.send m
 
-module.exports = (id, options) ->
-  runtime = new WebRTCRuntime id, options
+module.exports = (address, options, dontstart) ->
+  runtime = new WebRTCRuntime address, options, dontstart
   return runtime
