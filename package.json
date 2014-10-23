@@ -1,7 +1,7 @@
 {
   "name": "noflo-runtime-webrtc",
   "description": "NoFlo runtime transport over WebRTC",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": {
     "name": "Jon Nordby",
     "email": "jononor@gmail.com"
