@@ -11,6 +11,7 @@ class WebRTCRuntime extends Base
   constructor: (address, options, dontstart) ->
     super options
     @channels = []
+    @debug = false
 
     if (address and address.indexOf('#') != -1)
       @signaller = address.split('#')[0]
@@ -40,12 +41,13 @@ class WebRTCRuntime extends Base
         context =
           channel: dc
         msg = JSON.parse data.data
+        console.log 'message', msg if @debug
         @receive msg.protocol, msg.command, msg.payload, context
 
     peer.on 'channel:closed:chat', (id, dc) =>
       dc.onmessage = null
-      return if (runtime.connections.indexOf(connection) == -1)
-      runtime.connections.splice runtime.connections.indexOf(connection), 1
+      return if (@channels.indexOf(dc) == -1)
+      @channels.splice @channels.indexOf(dc), 1
 
   send: (protocol, topic, payload, context) ->
     return if not context.channel
@@ -54,6 +56,7 @@ class WebRTCRuntime extends Base
       command: topic
       payload: payload
     m = JSON.stringify msg
+    console.log 'send', msg if @debug
     context.channel.send m
 
   sendAll: (protocol, topic, payload) ->
@@ -62,6 +65,7 @@ class WebRTCRuntime extends Base
       command: topic
       payload: payload
     m = JSON.stringify msg
+    console.log 'sendAll', msg if @debug
     for channel in @channels
       channel.send m
 
