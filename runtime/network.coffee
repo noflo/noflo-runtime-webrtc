@@ -67,7 +67,10 @@ class WebRTCRuntime extends Base
     m = JSON.stringify msg
     console.log 'sendAll', msg if @debug
     for channel in @channels
-      channel.send m
+      try
+        channel.send m
+      catch e
+        #
 
 module.exports = (address, options, dontstart) ->
   runtime = new WebRTCRuntime address, options, dontstart
