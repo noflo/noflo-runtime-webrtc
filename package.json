@@ -30,7 +30,7 @@
     "grunt-mocha-test": "^0.12.1",
     "grunt-noflo-browser": "^0.1.3",
     "mocha": "^2.4.5",
-    "noflo": "^0.6.0",
+    "noflo": "^0.7.0",
     "noflo-core": "^0.1.11"
   },
   "main": "./runtime/network.js"
