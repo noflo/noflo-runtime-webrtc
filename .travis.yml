@@ -3,3 +3,11 @@ node_js:
 - '4.2'
 before_script:
 - npm install -g grunt-cli
+deploy:
+  provider: npm
+  email: jononor@gmail.com
+  api_key:
+    secure: K/+7PxCiGt5+hrP2yX4TAan/DH3+UxDO2jTdJhhA9XRysKK+GZqxebY25fuskvu4HjYAYT/gtjwkxr3vMOju5i1a4uEaEn4kpbm2J1WkCL2bw9QVxmZ6NvzdHjQk+v7wVMIMLi6GTk927w5+DWpNXFkHoDDQEBibyVoPuLrRUTc=
+  on:
+    tags: true
+    repo: noflo/noflo-runtime-webrtc
