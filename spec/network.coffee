@@ -84,7 +84,8 @@ describeIfBrowser 'WebRTC runtime', ->
   describe 'Instantiating with a graph', ->
     it 'should emit network:addnetwork', (done) ->
       file = "'18' -> IN rep(core/Repeat)"
-      noflo.graph.loadFBP file, (graph) ->
+      noflo.graph.loadFBP file, (err, graph) ->
+        chai.expect(err).to.not.exist
         console.log graph.id
         graph.id = 'default/main'
         graph.baseDir = 'noflo-runtime-webrtc'
