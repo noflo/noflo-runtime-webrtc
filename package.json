@@ -6,6 +6,7 @@
     "name": "Jon Nordby",
     "email": "jononor@gmail.com"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/noflo/noflo-runtime-webrtc.git"
