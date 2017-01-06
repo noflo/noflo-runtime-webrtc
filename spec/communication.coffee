@@ -2,11 +2,8 @@
 isBrowser = ->
   !(typeof process isnt 'undefined' and process.execPath and process.execPath.indexOf('node') isnt -1)
 
-if isBrowser()
-  uuid = require 'node-uuid'
-else
-  chai = require 'chai'
-  uuid = require 'uuid'
+chai = require 'chai' unless chai
+uuid = require 'uuid'
 
 describeIfBrowser = if isBrowser() then describe else describe.skip
 describeIfWebRTC = if (isBrowser() and not window.callPhantom) then describe else describe.skip
@@ -30,7 +27,7 @@ describeIfWebRTC 'WebRTC communication', ->
         debug: true
         channels:
           chat: true
-        signaller: '//switchboard.rtc.io'
+        signaller: 'https://api.flowhub.io'
         capture: false
         constraints: false
         expectedLocalStreams: 0

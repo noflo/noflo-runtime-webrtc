@@ -6,11 +6,8 @@ noflo = require 'noflo'
 {EventEmitter} = require 'events'
 Runtime = require 'noflo-runtime-webrtc'
 
-if isBrowser()
-  uuid = require 'node-uuid'
-else
-  chai = require 'chai'
-  uuid = require 'uuid'
+chai = require 'chai' unless chai
+uuid = require 'uuid'
 
 describeIfBrowser = if isBrowser() then describe else describe.skip
 describeIfWebRTC = if (isBrowser() and not window.callPhantom) then describe else describe.skip
@@ -82,24 +79,22 @@ describeIfBrowser 'WebRTC runtime', ->
       chai.expect(runtime.id).to.equal id
       chai.expect(runtime.signaller).to.equal signaller
   describe 'Instantiating with a graph', ->
-    it 'should emit network:addnetwork', (done) ->
+    it 'should create a network', (done) ->
       file = "'18' -> IN rep(core/Repeat)"
       noflo.graph.loadFBP file, (err, graph) ->
-        chai.expect(err).to.not.exist
-        console.log graph.id
+        return done err if err
         graph.id = 'default/main'
         graph.baseDir = 'noflo-runtime-webrtc'
         chai.expect(graph).to.be.a 'object'
-        runtime = new Runtime null, { defaultGraph: graph, baseDir: graph.baseDir }, true
-        runtime.network.on 'addnetwork', () ->
-          chai.expect(Object.keys(runtime.network.networks)).to.have.length 1
-          done()
+        runtime = new Runtime null, { defaultGraph: graph, baseDir: graph.baseDir }, false
+        chai.expect(Object.keys(runtime.network.networks)).to.have.length 1
+        done()
 
   describeIfWebRTC 'Running', () ->
     ui = null
     runtime = null
     options = {}
-    address = 'http://switchboard.rtc.io#'+uuid.v4()
+    address = 'https://api.flowhub.io#'+uuid.v4()
     it 'connecting UI emits connected', (done) ->
       @timeout 10000
       runtime = new Runtime address, options
