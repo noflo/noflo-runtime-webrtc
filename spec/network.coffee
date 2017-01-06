@@ -6,11 +6,8 @@ noflo = require 'noflo'
 {EventEmitter} = require 'events'
 Runtime = require 'noflo-runtime-webrtc'
 
-if isBrowser()
-  uuid = require 'node-uuid'
-else
-  chai = require 'chai'
-  uuid = require 'uuid'
+chai = require 'chai' unless chai
+uuid = require 'uuid'
 
 describeIfBrowser = if isBrowser() then describe else describe.skip
 describeIfWebRTC = if (isBrowser() and not window.callPhantom) then describe else describe.skip
