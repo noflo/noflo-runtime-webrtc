@@ -82,8 +82,7 @@ describeIfBrowser 'WebRTC runtime', ->
     it 'should emit network:addnetwork', (done) ->
       file = "'18' -> IN rep(core/Repeat)"
       noflo.graph.loadFBP file, (err, graph) ->
-        chai.expect(err).to.not.exist
-        console.log graph.id
+        return done err if err
         graph.id = 'default/main'
         graph.baseDir = 'noflo-runtime-webrtc'
         chai.expect(graph).to.be.a 'object'
@@ -96,7 +95,7 @@ describeIfBrowser 'WebRTC runtime', ->
     ui = null
     runtime = null
     options = {}
-    address = 'http://switchboard.rtc.io#'+uuid.v4()
+    address = 'https://api.flowhub.io#'+uuid.v4()
     it 'connecting UI emits connected', (done) ->
       @timeout 10000
       runtime = new Runtime address, options

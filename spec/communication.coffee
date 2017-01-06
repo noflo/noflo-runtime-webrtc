@@ -27,7 +27,7 @@ describeIfWebRTC 'WebRTC communication', ->
         debug: true
         channels:
           chat: true
-        signaller: '//switchboard.rtc.io'
+        signaller: 'https://api.flowhub.io'
         capture: false
         constraints: false
         expectedLocalStreams: 0
