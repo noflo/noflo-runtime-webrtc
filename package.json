@@ -15,19 +15,16 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "node-uuid": "^1.4.7",
-    "noflo-runtime-base": "~0.7.1",
+    "noflo-runtime-base": "^0.7.1",
     "peerjs": "^0.3.6",
     "uuid": "^2.0.1"
   },
   "devDependencies": {
-    "chai": "~3.5.0",
-    "grunt": "~1.0.1",
-    "grunt-cafe-mocha": "~0.1.8",
-    "grunt-coffee": "0.0.6",
+    "chai": "^3.5.0",
+    "grunt": "^1.0.1",
     "grunt-contrib-coffee": "^1.0.0",
     "grunt-contrib-connect": "^1.0.2",
-    "grunt-contrib-watch": "~1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
     "grunt-mocha-phantomjs": "^4.0.0",
     "grunt-mocha-test": "^0.13.2",
     "grunt-noflo-browser": "^1.0.1",
