@@ -79,17 +79,16 @@ describeIfBrowser 'WebRTC runtime', ->
       chai.expect(runtime.id).to.equal id
       chai.expect(runtime.signaller).to.equal signaller
   describe 'Instantiating with a graph', ->
-    it 'should emit network:addnetwork', (done) ->
+    it 'should create a network', (done) ->
       file = "'18' -> IN rep(core/Repeat)"
       noflo.graph.loadFBP file, (err, graph) ->
         return done err if err
         graph.id = 'default/main'
         graph.baseDir = 'noflo-runtime-webrtc'
         chai.expect(graph).to.be.a 'object'
-        runtime = new Runtime null, { defaultGraph: graph, baseDir: graph.baseDir }, true
-        runtime.network.on 'addnetwork', () ->
-          chai.expect(Object.keys(runtime.network.networks)).to.have.length 1
-          done()
+        runtime = new Runtime null, { defaultGraph: graph, baseDir: graph.baseDir }, false
+        chai.expect(Object.keys(runtime.network.networks)).to.have.length 1
+        done()
 
   describeIfWebRTC 'Running', () ->
     ui = null
