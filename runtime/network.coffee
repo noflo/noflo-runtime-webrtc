@@ -17,9 +17,9 @@ class WebRTCRuntime extends Base
       @id = address
     @id = uuid.v4() if not @id
 
-    super options
-
     @start() if not dontstart
+
+    super options
 
   start: () ->
     rtcOptions =
