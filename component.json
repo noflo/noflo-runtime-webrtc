@@ -12,7 +12,7 @@
   "dependencies": {
     "noflo/noflo-runtime-base": "*",
     "bergie/emitter": "*",
-    "broofa/node-uuid": "1.4.6",
+    "broofa/node-uuid": "v1.4.7",
     "noflo/noflo": "*",
     "noflo/noflo-core": "*"
   },
