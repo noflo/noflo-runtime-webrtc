@@ -11,6 +11,13 @@ module.exports = ->
     # Browser verison building
     noflo_browser:
       build:
+        options:
+          exposed_modules: [
+            'noflo'
+            'noflo-runtime-webrtc'
+            'events'
+            'uuid'
+          ]
         files:
           'browser/noflo-runtime-webrtc.js': ['component.json']
 

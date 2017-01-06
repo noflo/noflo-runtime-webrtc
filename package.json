@@ -30,11 +30,11 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-mocha-phantomjs": "^4.0.0",
     "grunt-mocha-test": "^0.13.2",
-    "grunt-noflo-browser": "^1.0.1",
+    "grunt-noflo-browser": "^1.1.0",
     "json-loader": "^0.5.4",
     "mocha": "^3.2.0",
     "noflo": "^0.7.0",
-    "noflo-core": "^0.1.11"
+    "noflo-core": "^0.2.2"
   },
   "main": "./runtime/network.js"
 }
