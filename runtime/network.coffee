@@ -9,7 +9,6 @@ else
 
 class WebRTCRuntime extends Base
   constructor: (address, options, dontstart) ->
-    super options
     @channels = []
     @debug = false
 
@@ -20,6 +19,8 @@ class WebRTCRuntime extends Base
       @signaller = 'https://api.flowhub.io'
       @id = address
     @id = uuid.v4() if not @id
+
+    super options
 
     @start() if not dontstart
 
