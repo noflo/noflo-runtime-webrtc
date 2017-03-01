@@ -8,7 +8,7 @@
     "noflo"
   ],
   "repo": "noflo/noflo-runtime-webrtc",
-  "version": "0.0.5",
+  "version": "0.8.0",
   "dependencies": {
     "noflo/noflo-runtime-base": "*",
     "bergie/emitter": "*",
