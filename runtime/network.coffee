@@ -56,6 +56,7 @@ class WebRTCRuntime extends Base
     m = JSON.stringify msg
     console.log 'send', msg if @debug
     context.channel.send m
+    super protocol, topic, payload, context
 
   sendAll: (protocol, topic, payload) ->
     msg =
