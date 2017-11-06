@@ -6,6 +6,7 @@ uuid = require 'uuid'
 
 class WebRTCRuntime extends Base
   constructor: (address, options, dontstart) ->
+    super options
     @channels = []
     @debug = false
 
@@ -18,8 +19,6 @@ class WebRTCRuntime extends Base
     @id = uuid.v4() if not @id
 
     @start() if not dontstart
-
-    super options
 
   start: () ->
     rtcOptions =
@@ -58,7 +57,7 @@ class WebRTCRuntime extends Base
     context.channel.send m
     super protocol, topic, payload, context
 
-  sendAll: (protocol, topic, payload) ->
+  sendAll: (protocol, topic, payload) =>
     msg =
       protocol: protocol
       command: topic

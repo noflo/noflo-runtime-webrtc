@@ -24,6 +24,8 @@ module.exports = ->
       spec:
         options:
           bare: true
+          transpile:
+            presets: ['es2015']
         expand: true
         cwd: 'spec'
         src: ['**.coffee']
@@ -44,7 +46,7 @@ module.exports = ->
         src: ['test/*.js']
         options:
           reporter: 'spec'
-          require: 'coffee-script/register'
+          require: 'coffeescript/register'
 
     # Web server for the browser tests
     connect:

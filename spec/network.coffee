@@ -15,6 +15,7 @@ describeIfWebRTC = if (isBrowser() and not window.callPhantom) then describe els
 
 class FakeClient extends EventEmitter
   constructor: (address) ->
+    super()
     @peer = null
     @channel = null
     @address = address
