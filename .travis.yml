@@ -6,6 +6,7 @@ before_script:
 deploy:
   provider: npm
   email: henri.bergius@iki.fi
+  skip_cleanup: true
   api_key:
     secure: Yfi6kg+ddTaCLHX4BPmwbPFSJGGUP/msfOA5UxiPiPGtQtImGz6KC1mU4BDzF5xSqQCzfrppTylstS1LPLZ709ZYXHf2Zm98MvDgRNu5J0Ga0XUgHtxPdkhS/IpLZq9MLYqffYL2xBPdsX5ha8bYSWfvpFVAHNb8IH37eq5M7Gc=
   on:
