@@ -58,17 +58,11 @@ class WebRTCRuntime extends Base
     super protocol, topic, payload, context
 
   sendAll: (protocol, topic, payload) =>
-    msg =
-      protocol: protocol
-      command: topic
-      payload: payload
+    return unless @channels?.length
     m = JSON.stringify msg
-    console.log 'sendAll', msg if @debug
     for channel in @channels
-      try
-        channel.send m
-      catch e
-        #
+      @send protocol, topic, payload,
+        channel: channel
 
 module.exports = (address, options, dontstart) ->
   runtime = new WebRTCRuntime address, options, dontstart
