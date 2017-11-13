@@ -29,7 +29,7 @@
     "grunt-mocha-test": "^0.13.2",
     "grunt-noflo-browser": "^1.5.1",
     "mocha": "^4.0.0",
-    "noflo": "^1.0.0",
+    "noflo": "^1.0.1",
     "noflo-core": ">= 0.4.0",
     "rtc": "^3.4.0"
   },
