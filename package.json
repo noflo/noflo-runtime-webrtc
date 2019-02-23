@@ -15,7 +15,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "noflo-runtime-base": "^0.10.0",
+    "noflo-runtime-base": "^0.10.5",
     "peerjs": "^0.3.6",
     "uuid": "^3.0.1"
   },
