@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "noflo-runtime-base": "^0.10.0",
-    "peerjs": "^0.3.6",
+    "peerjs": "^1.1.0",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
