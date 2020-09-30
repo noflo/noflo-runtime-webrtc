@@ -7,7 +7,7 @@ if (typeof global !== 'undefined') {
   global.baseDir = process.cwd();
 } else {
   // Browser injections for Mocha tests
+  window.chai = require('chai');
   window.noflo = require('noflo');
-  window.direct = require('noflo-runtime-base').direct;
   window.baseDir = 'browser';
 }

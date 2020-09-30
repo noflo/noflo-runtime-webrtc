@@ -1,8 +1,10 @@
 const { getTransport } = require('fbp-protocol-client');
-const chai = require('chai');
 const { v4: uuid } = require('uuid');
 const noflo = require('noflo');
-const Runtime = require('../runtime/network');
+
+const runtimeLib = (baseDir === 'browser') ? 'noflo-runtime-webrtc' : '../runtime/network';
+// eslint-disable-next-line
+const Runtime = require(runtimeLib);
 
 const Client = getTransport('webrtc');
 

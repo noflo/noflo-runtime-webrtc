@@ -1,7 +1,9 @@
 var exported = {
+  'chai': require('chai'),
   'noflo': require('noflo'),
   'fbp-protocol-client': require('fbp-protocol-client'),
   'noflo-runtime-webrtc': require('./runtime/network.js'),
+  'uuid': require('uuid'),
 };
 
 if (window) {
