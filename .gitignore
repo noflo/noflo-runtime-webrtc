@@ -1,7 +1,6 @@
 node_modules
 *~
 spec/result.xml
-spec/*.js
-runtime/*.js
 browser/
 components/
+package-lock.json
