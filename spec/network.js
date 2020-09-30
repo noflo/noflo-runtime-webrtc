@@ -1,6 +1,7 @@
 const { getTransport } = require('fbp-protocol-client');
 const chai = require('chai');
 const { v4: uuid } = require('uuid');
+const noflo = require('noflo');
 const Runtime = require('../runtime/network');
 
 const Client = getTransport('webrtc');
@@ -39,18 +40,17 @@ describe('WebRTC runtime', () => {
           done(err);
           return;
         }
-        const baseDir = 'noflo-runtime-webrtc';
+        const baseDir = process.cwd();
         chai.expect(graph).to.be.a('object');
         const runtime = new Runtime(null, {
-          defaultGraph: {
-            ...graph,
-            id: 'default/main',
-            baseDir,
-          },
+          defaultGraph: graph,
           baseDir,
-        }, false);
-        chai.expect(Object.keys(runtime.network.networks)).to.have.length(1);
-        done();
+        }, true);
+        runtime.once('error', done);
+        runtime.once('ready', () => {
+          chai.expect(Object.keys(runtime.network.networks)).to.have.length(1);
+          done();
+        });
       });
     });
   });
