@@ -70,6 +70,13 @@ class WebRTCRuntime extends Base {
     });
   }
 
+  stop() {
+    this.signaller.disconnect();
+    this.signaller = null;
+    this.peer.destroy();
+    this.peer = null;
+  }
+
   send(protocol, topic, payload, context) {
     if (!this.connected) {
       return;

@@ -59,6 +59,14 @@ describe('WebRTC runtime', () => {
     let runtime = null;
     const options = {};
     const address = `ws://api.flowhub.io#${uuid()}`;
+    after(() => {
+      if (runtime) {
+        runtime.stop();
+      }
+      if (ui) {
+        ui.disconnect();
+      }
+    });
     it('connecting UI emits connected', (done) => {
       runtime = new Runtime(address, options, true);
       ui = new Client({
