@@ -63,9 +63,6 @@ describe('WebRTC runtime', () => {
       if (runtime) {
         runtime.stop();
       }
-      if (ui) {
-        ui.disconnect();
-      }
     });
     it('connecting UI emits connected', (done) => {
       runtime = new Runtime(address, options, true);
