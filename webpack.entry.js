@@ -1,5 +1,6 @@
 var exported = {
   'noflo': require('noflo'),
+  'fbp-protocol-client': require('fbp-protocol-client'),
   'noflo-runtime-webrtc': require('./runtime/network.js'),
 };
 
