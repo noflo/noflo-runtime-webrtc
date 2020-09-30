@@ -61,7 +61,7 @@ class WebRTCRuntime extends Base {
       this.connected = true;
     });
     this.peer.on('data', (data) => {
-      const msg = JSON.parse(data.data);
+      const msg = JSON.parse(data);
       this.receive(msg.protocol, msg.command, msg.payload, {});
     });
     this.peer.on('close', () => {
