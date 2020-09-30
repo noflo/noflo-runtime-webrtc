@@ -12,26 +12,41 @@
     "url": "git://github.com/noflo/noflo-runtime-webrtc.git"
   },
   "scripts": {
-    "test": "grunt test"
+    "lint": "eslint runtime/*.js spec/*.js",
+    "build": "noflo-cache-preheat && webpack --config ./webpack.config.js",
+    "pretest": "npm run lint && npm run build",
+    "test:nodejs": "mocha --exit --require spec/utils/inject.js spec/*.js",
+    "test:browser": "karma start node_modules/noflo-webpack-config/karma.config.js",
+    "test": "npm run test:nodejs && npm run test:browser"
   },
   "dependencies": {
-    "noflo-runtime-base": "^0.10.0",
-    "peerjs": "^0.3.6",
-    "uuid": "^3.0.1"
+    "fbp-protocol-client": "^0.3.0",
+    "noflo-runtime-base": "^0.11.5",
+    "simple-peer": "^9.7.2",
+    "uuid": "^8.3.0"
+  },
+  "optionalDependencies": {
+    "wrtc": "^0.4.6"
   },
   "devDependencies": {
     "chai": "^4.0.0",
-    "grunt": "^1.0.1",
-    "grunt-contrib-coffee": "^2.0.0",
-    "grunt-contrib-connect": "^1.0.2",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-mocha-phantomjs": "^4.0.0",
-    "grunt-mocha-test": "^0.13.2",
-    "grunt-noflo-browser": "^1.5.1",
-    "mocha": "^5.0.5",
-    "noflo": "^1.0.0",
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-chai": "0.0.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-mocha": "^8.0.0",
+    "karma": "^5.2.3",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-mocha": "^2.0.1",
+    "karma-mocha-reporter": "^2.2.5",
+    "mocha": "^8.1.3",
+    "noflo": "^1.2.0",
+    "noflo-component-loader": "^0.3.5",
     "noflo-core": ">= 0.4.0",
-    "rtc": "^3.4.0"
+    "noflo-webpack-config": "^1.1.0",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
   },
   "keywords": [
     "noflo"
