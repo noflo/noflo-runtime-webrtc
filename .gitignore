@@ -4,3 +4,4 @@ spec/result.xml
 browser/
 components/
 package-lock.json
+fbp.json

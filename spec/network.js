@@ -40,7 +40,6 @@ describe('WebRTC runtime', () => {
           done(err);
           return;
         }
-        const baseDir = process.cwd();
         chai.expect(graph).to.be.a('object');
         const runtime = new Runtime(null, {
           defaultGraph: graph,
