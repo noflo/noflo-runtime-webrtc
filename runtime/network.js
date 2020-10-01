@@ -93,6 +93,9 @@ class WebRTCRuntime extends Base {
   }
 
   send(protocol, topic, payload, context) {
+    if (!context || !context.peer) {
+      return;
+    }
     const msg = {
       protocol,
       command: topic,
