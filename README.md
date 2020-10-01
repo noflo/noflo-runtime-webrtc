@@ -7,3 +7,9 @@ This allows to live debug and change NoFlo programs that run in a browser (clien
 You can pass a Flowhub live-url from any device, to someone, and they can connect to it.
 
 One should also be able to run [fbp-spec](https://github.com/flowbased/fbp-spec) tests over it.
+
+## Changes
+
+* 0.11.0 (2020-10-01)
+  - Updated for NoFlo 1.2
+  - WebRTC runtime is now usable in both Node.js and the browser
