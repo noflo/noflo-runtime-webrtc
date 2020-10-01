@@ -1,7 +1,7 @@
 const Peer = require('simple-peer');
 const Base = require('noflo-runtime-base');
 const { v4: uuid } = require('uuid');
-const { signaller: Signaller } = require('fbp-protocol-client');
+const { Signaller } = require('fbp-protocol-client');
 
 const isBrowser = () => !((typeof process !== 'undefined') && process.execPath && (process.execPath.indexOf('node') !== -1));
 
@@ -9,7 +9,7 @@ class WebRTCRuntime extends Base {
   constructor(address, options, dontstart) {
     super(options);
 
-    let signaller = 'ws://api.flowhub.io';
+    let signaller = 'wss://api.flowhub.io';
     let roomId = address;
     if (address && (address.indexOf('#') !== -1)) {
       [signaller, roomId] = address.split('#');
@@ -19,7 +19,7 @@ class WebRTCRuntime extends Base {
     }
     this.signallerAddress = signaller;
     this.id = roomId;
-    this.connected = false;
+    this.peers = {};
 
     if (!dontstart) {
       this.start();
@@ -35,63 +35,83 @@ class WebRTCRuntime extends Base {
       // eslint-disable-next-line
       rtcOptions.wrtc = require('wrtc');
     }
-    this.signaller = new Signaller(this.signallerAddress, this.id);
+    this.signaller = new Signaller(uuid(), 'runtime', this.signallerAddress);
     this.signaller.connect();
     this.signaller.once('connected', () => {
-      this.signaller.announce(this.id);
-      this.peer = new Peer(rtcOptions);
-      this.subscribePeer();
+      // Join the runtime ID room
+      this.signaller.join(this.id);
     });
-    this.signaller.on('signal', (data) => {
-      if (!this.peer && !this.peer.destroyed) {
+    this.signaller.on('join', (member) => {
+      if (this.peers[member.id]) {
         return;
       }
-      this.peer.signal(data);
+      // Another peer has joined. Likely the runtime
+      this.signaller.joinReply(member.id, this.id);
+      this.connectPeer(member, rtcOptions);
+    });
+    this.signaller.on('signal', (data, member) => {
+      // Getting signalling information for a peer
+      const peer = this.peers[member.id];
+      if (!peer && !peer.destroyed) {
+        return;
+      }
+      peer.signal(data);
     });
     this.signaller.on('error', (err) => {
       this.emit('error', err);
+      this.signaller = null;
+    });
+    this.signaller.on('disconnected', () => {
+      this.signaller = null;
     });
   }
 
-  subscribePeer() {
-    this.peer.on('signal', (data) => {
-      this.signaller.announce(this.id, data);
+  connectPeer(member, rtcOptions) {
+    const peer = new Peer(rtcOptions);
+    peer.on('signal', (data) => {
+      this.signaller.signal(member.id, data);
     });
-    this.peer.on('connect', () => {
-      this.connected = true;
-    });
-    this.peer.on('data', (data) => {
+    peer.on('data', (data) => {
       const msg = JSON.parse(data);
-      this.receive(msg.protocol, msg.command, msg.payload, {});
+      this.receive(msg.protocol, msg.command, msg.payload, {
+        peer: member.id,
+      });
     });
-    this.peer.on('close', () => {
-      this.connected = false;
-      // TODO: start anew?
+    peer.on('close', () => {
+      delete this.peers[member.id];
     });
+    this.peers[member.id] = peer;
   }
 
   stop() {
     this.signaller.disconnect();
     this.signaller = null;
-    this.peer.destroy();
-    this.peer = null;
+    Object.keys(this.peers).forEach((p) => {
+      this.peers[p].destroy();
+      delete this.peers[p];
+    });
   }
 
   send(protocol, topic, payload, context) {
-    if (!this.connected) {
-      return;
-    }
     const msg = {
       protocol,
       command: topic,
       payload,
     };
-    this.peer.send(JSON.stringify(msg));
+    const peer = this.peers[context.peer];
+    if (!peer || peer.destroyed) {
+      return;
+    }
+    peer.send(JSON.stringify(msg));
     super.send(protocol, topic, payload, context);
   }
 
   sendAll(protocol, topic, payload) {
-    return this.send(protocol, topic, payload, {});
+    Object.keys(this.peers).forEach((p) => {
+      this.send(protocol, topic, payload, {
+        peer: p,
+      });
+    });
   }
 }
 

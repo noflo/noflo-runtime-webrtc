@@ -21,7 +21,7 @@ describe('WebRTC runtime', () => {
       const name = 'myfunckycustomid11';
       const runtime = new Runtime(name, {}, true);
       chai.expect(runtime.id).to.equal(name);
-      chai.expect(runtime.signallerAddress).to.equal('ws://api.flowhub.io');
+      chai.expect(runtime.signallerAddress).to.equal('wss://api.flowhub.io');
     });
   });
   describe('Instantiating with signaller#ID', () => {
@@ -60,13 +60,14 @@ describe('WebRTC runtime', () => {
     let ui = null;
     let runtime = null;
     const options = {};
-    const address = `ws://api.flowhub.io#${uuid()}`;
+    const address = `wss://api.flowhub.io#${uuid()}`;
     after(() => {
       if (runtime) {
         runtime.stop();
       }
     });
-    it('connecting UI emits connected', (done) => {
+    it('connecting UI emits connected', function (done) {
+      this.timeout(5000);
       runtime = new Runtime(address, options, true);
       ui = new Client({
         protocol: 'webrtc',
