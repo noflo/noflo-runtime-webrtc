@@ -66,7 +66,8 @@ describe('WebRTC runtime', () => {
         runtime.stop();
       }
     });
-    it('connecting UI emits connected', (done) => {
+    it('connecting UI emits connected', function (done) {
+      this.timeout(5000);
       runtime = new Runtime(address, options, true);
       ui = new Client({
         protocol: 'webrtc',
