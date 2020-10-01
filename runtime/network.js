@@ -77,7 +77,7 @@ class WebRTCRuntime extends Base {
         peer: member.id,
       });
     });
-    this.peer.on('close', () => {
+    peer.on('close', () => {
       delete this.peers[member.id];
     });
     this.peers[member.id] = peer;
