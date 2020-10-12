@@ -46,7 +46,7 @@
     "noflo-core": ">= 0.4.0",
     "noflo-webpack-config": "^1.1.0",
     "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^4.0.0"
   },
   "keywords": [
     "noflo"
