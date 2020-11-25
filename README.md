@@ -10,6 +10,8 @@ One should also be able to run [fbp-spec](https://github.com/flowbased/fbp-spec)
 
 ## Changes
 
+* 0.12.0 (2020-11-25)
+  - Updated to NoFlo 1.3.0 model
 * 0.11.1 (2020-10-01)
   - Added safety when runtime is sending to nobody in particular
 * 0.11.0 (2020-10-01)
